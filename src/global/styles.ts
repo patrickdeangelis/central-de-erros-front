@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
             flex-wrap: wrap-reverse!important;
         }
     }
+
+    .text-line {
+        text-decoration: line-through !important;
+    }
 `;
 
 export default GlobalStyle;
