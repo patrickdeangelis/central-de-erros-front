@@ -3,7 +3,7 @@ import React, { createContext, useCallback, useContext, useState } from "react";
 import api  from "../services/api";
 import { isUndefined } from "util";
 
-interface User {
+export interface User {
   name: string;
   email: string;
   id: number;
