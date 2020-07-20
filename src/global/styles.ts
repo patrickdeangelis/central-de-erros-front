@@ -8,6 +8,15 @@ const GlobalStyle = createGlobalStyle`
     body {
         background: #F2F2F2;
     }
+
+    @media only screen and (max-width: 480px) {
+        .mobile-wrap {
+            flex-wrap: wrap !important;
+        }
+        .mobile-wrap-reverse {
+            flex-wrap: wrap-reverse!important;
+        }
+    }
 `;
 
 export default GlobalStyle;
