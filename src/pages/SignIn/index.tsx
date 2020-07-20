@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Redirect } from "react-router-dom";
 
-import { Container, FormContainer, Input, ForgotPasswordLink } from "./styles";
+import { Container, FormContainer, Input, ForgotPasswordLink } from "../../global/AuthStyles";
 import { useAuth } from "../../hooks/AuthContext";
 
 export default function SignIn() {
@@ -36,6 +36,7 @@ export default function SignIn() {
               placeholder="Digite seu email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </Form.Group>
 
@@ -46,6 +47,7 @@ export default function SignIn() {
               placeholder="Digite sua senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </Form.Group>
 
@@ -58,7 +60,7 @@ export default function SignIn() {
             Esqueci minha senha
           </ForgotPasswordLink>
           <ForgotPasswordLink to={{ pathname: "/register" }}>
-            Realizar cadastro
+            Criar conta
           </ForgotPasswordLink>
         </div>
       </FormContainer>
