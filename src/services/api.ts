@@ -30,7 +30,8 @@ api.interceptors.response.use((response) => {
         location.href = '/'
         return Promise.reject(error);
     }
- 
+
+
     if (error.response.status === 401 && !originalRequest._retry) {
  
         originalRequest._retry = true;
@@ -49,10 +50,11 @@ api.interceptors.response.use((response) => {
             })
             .then(res => {
                 if (res.status === 200) {
-                    console.log('deu refresh')
                     const tokenData  = res.data as Token;
                     localStorage.setItem('@Logs:token', JSON.stringify(tokenData));
+                    
                     api.defaults.headers.common['Authorization'] = 'JWT ' + tokenData.access;
+                    originalRequest.headers['Authorization'] = 'JWT ' + tokenData.access;
                     return axios(originalRequest);
                 }
             })
