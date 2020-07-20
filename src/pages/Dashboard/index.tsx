@@ -3,6 +3,8 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
+import Spinner from 'react-bootstrap/Spinner'
+import { useHistory } from 'react-router-dom'
 
 import {useAuth} from '../../hooks/AuthContext'
 import {Header, Container, ActionsContainer} from './styles'
@@ -15,6 +17,8 @@ export default function Dashboard() {
     const [search, setSearch] = useState('');
     const [selectAll, setSelectAll] = useState(false);
     const [events, setEvents] = useState<Array<Event>>();
+
+    const history = useHistory();
     
     useMemo(async () => {
         try{
@@ -97,27 +101,38 @@ export default function Dashboard() {
                 </div>
             </ActionsContainer>
             <Container>
-            <Table responsive>
-                <thead>
-                    <tr>
-                        <th>Level</th>
-                        <th>Log</th>
-                        <th>Data</th>
-                        <th>Eventos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {events && events.map(item => (
-                    <tr key={`${item.id}`}>
-                        <td>{item.level}</td>
-                        <td>{item.title}</td>
-                        <td>{item.date}</td>
-                        <td>{item.number_of_occurrences}</td>
-                    </tr>
-                    ))}
-                    
-                </tbody>
-                </Table>
+                { !events 
+                    ? (
+                        <div className="text-center">
+                            <Spinner  animation="border" variant="success"/>
+                        </div>
+                    ) 
+                    : (
+                    <Table responsive>
+                    <thead>
+                        <tr>
+                            <th>Level</th>
+                            <th>Log</th>
+                            <th>Data</th>
+                            <th>Eventos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {events && events.map(item => (
+                        <tr 
+                            key={`${item.id}`} 
+                            onClick={() => history.push(`/details/${item.id}`)}
+                            style={{cursor: 'pointer'}}
+                        >
+                            <td>{item.level}</td>
+                            <td>{item.title}</td>
+                            <td>{item.date}</td>
+                            <td>{item.number_of_occurrences}</td>
+                        </tr>
+                        ))}
+                        
+                    </tbody>
+                </Table> )}
             </Container>
         </>
     )
