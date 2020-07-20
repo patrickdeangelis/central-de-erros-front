@@ -41,9 +41,14 @@ export default function Dashboard() {
                 </Form>
             </Header>
             <ActionsContainer>
-                <Form.Check type="checkbox" label="Selecionar tudo" style={{display: 'inline'}}/>
-                <Button variant="success">Arquivar</Button>
-                <Button variant="success">Apagar</Button>
+                <Form.Check 
+                    type="checkbox" 
+                    label="Selecionar tudo" 
+                    className="mx-2" 
+                    style={{display: 'inline'}}
+                />
+                <Button variant="success" className="mx-2">Arquivar</Button>
+                <Button variant="success" className="mx-2">Apagar</Button>
             </ActionsContainer>
             <Container>
             <Table responsive>
@@ -56,9 +61,6 @@ export default function Dashboard() {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
                         <td>Table cell</td>
                         <td>Table cell</td>
                         <td>Table cell</td>
