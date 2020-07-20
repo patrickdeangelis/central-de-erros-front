@@ -7,6 +7,7 @@ export default function eventFactory(rawData: any): Agent {
         adress: rawData.adress,
         env: rawData.env,
         user: rawData.user,
-        version: rawData.version
+        version: rawData.version,
+        name: rawData.name
     });
 }

@@ -4,4 +4,5 @@ export default interface Agent {
     id: number;
     user: number;
     version: string;
+    name: string;
 }

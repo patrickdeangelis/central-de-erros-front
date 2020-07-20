@@ -6,7 +6,7 @@ export default function eventFactory(rawData: any): Event {
     
     return ({
         id: rawData.id,
-        date: (rawData.date),
+        date: rawData.date,
         title: rawData.title,
         description: rawData.description,
         level: rawData.level,
