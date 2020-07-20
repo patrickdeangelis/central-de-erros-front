@@ -25,7 +25,7 @@ api.interceptors.response.use((response) => {
  }, function (error) {
     const originalRequest = error.config;
  
-    if (error.response.status === 401 && originalRequest.url === 'https://error-center-logs.herokuapp.com/auth/jwt/refresh') {
+    if (error.response.status === 401 && originalRequest.url === 'https://error-center-logs.herokuapp.com/auth/jwt/refresh/') {
         // eslint-disable-next-line no-restricted-globals
         location.href = '/'
         return Promise.reject(error);
@@ -36,22 +36,23 @@ api.interceptors.response.use((response) => {
         originalRequest._retry = true;
         const data = localStorage.getItem('@Logs:token');
         
-        if (!data) {
+        if (!data || data.length <= 0) {
             return Promise.reject(error)
         }
 
         const token = JSON.parse(data) as Token;
 
         const refreshToken = token.refresh;
-        return axios.post('/auth/jwt/refresh',
+        return axios.post('https://error-center-logs.herokuapp.com/auth/jwt/refresh/',
             {
                 "refresh": refreshToken
             })
             .then(res => {
                 if (res.status === 200) {
+                    console.log('deu refresh')
                     const tokenData  = res.data as Token;
                     localStorage.setItem('@Logs:token', JSON.stringify(tokenData));
-                    axios.defaults.headers.common['Authorization'] = 'JWT ' + tokenData.access;
+                    api.defaults.headers.common['Authorization'] = 'JWT ' + tokenData.access;
                     return axios(originalRequest);
                 }
             })
