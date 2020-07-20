@@ -12,9 +12,17 @@ export default function SignIn() {
 
   const { signIn, isAuthenticated } = useAuth();
 
-  return isAuthenticated() ? <Redirect to={{pathname: '/dashboard'}} /> : (
+  return isAuthenticated() ? (
+    <Redirect to={{ pathname: "/dashboard" }} />
+  ) : (
     <Container>
       <FormContainer>
+        <div className="d-flex justify-content-center mb-5">
+          <img
+            alt="logs logo"
+            src={require("../../assets/img/logo_green.svg")}
+          />
+        </div>
         <Form
           onSubmit={(e) => {
             e.preventDefault();
@@ -45,7 +53,7 @@ export default function SignIn() {
             Entrar
           </Button>
         </Form>
-        <div className="mt-4">
+        <div className="mt-4" style={{ textAlign: "right" }}>
           <ForgotPasswordLink to={{ pathname: "/forgotpassword" }}>
             Esqueci minha senha
           </ForgotPasswordLink>
