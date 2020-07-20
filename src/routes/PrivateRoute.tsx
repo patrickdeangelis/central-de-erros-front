@@ -11,9 +11,10 @@ const PrivateRoute: React.FC<RouteProps> = ({component: Component, ...rest}) => 
 
   return (
     <Route
-      render={() => {
+      component={() => {
         return isAuthenticated() ? <Component/> : <Redirect to={{pathname: '/'}}/>
       }}
+      {...rest}
     />
   );
 }
