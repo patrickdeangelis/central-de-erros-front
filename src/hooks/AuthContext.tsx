@@ -9,7 +9,7 @@ interface User {
   id: number;
 }
 
-interface Token {
+export interface Token {
     access: string;
     refresh: string;
 }
