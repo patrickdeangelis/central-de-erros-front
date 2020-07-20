@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState, useMemo} from 'react'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
@@ -6,11 +6,28 @@ import Table from 'react-bootstrap/Table'
 
 import {useAuth} from '../../hooks/AuthContext'
 import {Header, Container, ActionsContainer} from './styles'
+import api from '../../services/api'
+import Event from '../../core/models/Event'
+import EventFactory from '../../core/factories/EventFactory'
 
 export default function Dashboard() {
     const {user, signOut} = useAuth();
     const [search, setSearch] = useState('');
     const [selectAll, setSelectAll] = useState(false);
+    const [events, setEvents] = useState<Array<Event>>();
+    
+    useMemo(async () => {
+        try{
+            const {data} = await api.get('/events/')
+            setEvents(data.results.map((item: any) => {
+                return EventFactory(item)
+            }));
+        } catch (err) {
+            console.log(err.message)   
+        }
+        
+    }, []);
+
     return (
         <>
             <Header>
@@ -26,7 +43,7 @@ export default function Dashboard() {
                 </div>
                 <Form>
                     <Form.Row>
-                        <Form.Group as={Col} controlId="formGridState">
+                        <Form.Group as={Col} sm={12} md={2} controlId="formGridState" className="mobile-wrap">
                             <Form.Control as="select">
                                 <option selected disabled >Ambiente</option>
                                 <option value="">Todos</option>
@@ -36,7 +53,7 @@ export default function Dashboard() {
                             </Form.Control>
                         </Form.Group>
 
-                        <Form.Group as={Col} controlId="formGridState">
+                        <Form.Group as={Col} sm={12} md={2} controlId="formGridState" className="mobile-wrap">
                             <Form.Control as="select">
                                 <option selected disabled >Ordenar por</option>
                                 <option>Todos</option>
@@ -45,7 +62,7 @@ export default function Dashboard() {
                             </Form.Control>
                         </Form.Group>
 
-                        <Form.Group as={Col} controlId="formGridState">
+                        <Form.Group as={Col} sm={12} md={2} controlId="formGridState">
                             <Form.Control as="select">
                                 <option selected disabled >Buscar por</option>
                                 <option value="level">Level</option>
@@ -54,7 +71,7 @@ export default function Dashboard() {
                             </Form.Control>
                         </Form.Group>
 
-                        <Form.Group as={Col} xs={6} controlId="formGridState">
+                        <Form.Group as={Col} sm={12} md={6} controlId="formGridState">
                             <Form.Control 
                                 placeholder="Buscar" 
                                 value={search}
@@ -74,8 +91,10 @@ export default function Dashboard() {
                     checked={selectAll}
                     onChange={() => setSelectAll(!selectAll)}
                 />
-                <Button variant="success" className="mx-2">Arquivar</Button>
-                <Button variant="success" className="mx-2">Apagar</Button>
+                <div style={{display: 'inline'}}>
+                    <Button variant="success" className="mx-2">Arquivar</Button>
+                    <Button variant="success" className="mx-2">Apagar</Button>
+                </div>
             </ActionsContainer>
             <Container>
             <Table responsive>
@@ -83,15 +102,20 @@ export default function Dashboard() {
                     <tr>
                         <th>Level</th>
                         <th>Log</th>
+                        <th>Data</th>
                         <th>Eventos</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
+                    {events && events.map(item => (
+                    <tr key={`${item.id}`}>
+                        <td>{item.level}</td>
+                        <td>{item.title}</td>
+                        <td>{item.date}</td>
+                        <td>{item.number_of_occurrences}</td>
                     </tr>
+                    ))}
+                    
                 </tbody>
                 </Table>
             </Container>
