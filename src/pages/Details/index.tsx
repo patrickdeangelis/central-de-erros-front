@@ -1,13 +1,13 @@
 import React, {useState, useMemo} from 'react';
 import {useParams, Link, useHistory} from 'react-router-dom';
-import Button from 'react-bootstrap/Button'
-import Spinner from 'react-bootstrap/Spinner'
+import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import Badge from 'react-bootstrap/Badge';
 
-import api from '../../services/api'
-import Event from '../../core/models/Event'
-import EventFactory from '../../core/factories/EventFactory'
-import {User} from '../../hooks/AuthContext'
-import {Header, Container} from './styles'
+import api from '../../services/api';
+import Event from '../../core/models/Event';
+import EventFactory from '../../core/factories/EventFactory';
+import {Header, Container} from './styles';
 
 export default function Details() {
     const {id} = useParams()
@@ -50,7 +50,7 @@ export default function Details() {
                 <div>
                     <h2>{`Erro no ${event.agent.adress} em ${formatDate(event.date)}`}</h2>
                     <div className="d-flex justify-content-between mobile-wrap">
-                        <div> 
+                        <div>
                             <div className="my-4">
                                 <h4>Título</h4>
                                 <p className="ml-4 text-secondary">{event.title}</p>
@@ -62,6 +62,10 @@ export default function Details() {
                             </div>
                         </div>
                         <div>
+                          <div className="mb-3">
+                            <h4>Level</h4>
+                            <Badge variant="success">{event.level}</Badge>
+                          </div>
                             <div>
                                 <h4>Eventos</h4>
                                 <p className="ml-4 text-secondary">{event.number_of_occurrences}</p>
